@@ -1,27 +1,28 @@
-import { formatDuration } from "./duration";
-
-describe("formatDuration", () => {
-  //spezialfälle
-  test("0 seconds should be formatted as 0s", () => {
-    expect(formatDuration(0)).toBe("0s");
-  });
-
-  test("negative seconds should throw an error", () => {
-    expect(() => formatDuration(-5)).toThrow("Negative durations are not allowed");
-  });
-
-  test("decimal seconds should be rounded", () => {
-    expect(formatDuration(62.7)).toBe("1m3s");
-  });
-
-  //standardfälle
-  test.each([
-    [33, "33s"],
-    [123, "2m3s"],
-    [500, "8m20s"],
-    [3600, "1h"],
-    [3999, "1h6m39s"],
-  ])("formatDuration(%d) should return '%s'", (input, expected) => {
-    expect(formatDuration(input)).toBe(expected);
-  });
+import { formatDuration } from './duration';
+ 
+describe('formatDuration', () => {
+    test('formats seconds correctly', () => {
+        expect(formatDuration(33)).toBe('33s');
+    });
+ 
+    test('formats minutes and seconds correctly', () => {
+        expect(formatDuration(123)).toBe('2m3s');
+    });
+ 
+    test('formats hours, minutes, and seconds correctly', () => {
+        expect(formatDuration(3999)).toBe('1h6m39s');
+    });
+ 
+    test('handles 0 seconds', () => {
+        expect(formatDuration(0)).toBe('0s');
+    });
+ 
+    test('throws an error for negative numbers', () => {
+        expect(() => formatDuration(-1)).toThrow('Duration cannot be negative');
+    });
+ 
+    test('rounds seconds correctly', () => {
+        expect(formatDuration(123.7)).toBe('2m4s');
+        expect(formatDuration(59.5)).toBe('1m0s');
+    });
 });

@@ -1,17 +1,31 @@
-export function formatDuration(seconds: number): string {
-  if (seconds < 0) {
-    throw new Error("Negative durations are not allowed");
+export function formatDuration(sekunden: number): string {
+  if (sekunden < 0) {
+    throw new Error("Duration cannot be negative");
   }
-
-  const totalSeconds = Math.round(seconds);
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const secs = totalSeconds % 60;
-
+ 
+  let stunden = Math.floor(sekunden / 3600);
+  sekunden %= 3600;
+  let minuten = Math.floor(sekunden / 60);
+  sekunden = Math.round(sekunden % 60);
+ 
+  if (sekunden === 60) 
+  {
+    sekunden = 0;
+    minuten += 1;
+  }
+ 
+  if (minuten === 60) {
+    minuten = 0;
+    stunden += 1;}
+ 
   let result = "";
-  if (hours > 0) result += `${hours}h`;
-  if (minutes > 0) result += `${minutes}m`;
-  if (secs > 0 || result === "") result += `${secs}s`;
-
+  if (stunden > 0) {
+    result += `${stunden}h`;
+  }
+  if (minuten > 0 || stunden > 0) {
+    result += `${minuten}m`;
+  }
+  result += `${sekunden}s`;
+ 
   return result;
 }
