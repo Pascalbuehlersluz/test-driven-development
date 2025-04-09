@@ -1,16 +1,16 @@
-export function formatDuration(sekunden: number): string {
-  if (sekunden < 0) {
-    throw new Error("Duration cannot be negative");
-  }
+export function formatDuration(seconds: number): string {
+  if (seconds < 0) {
+    throw new Error("Duration can't be minus");}
  
-  let stunden = Math.floor(sekunden / 3600);
-  sekunden %= 3600;
-  let minuten = Math.floor(sekunden / 60);
-  sekunden = Math.round(sekunden % 60);
+  let stunden = Math.floor(seconds / 3600);
+  seconds %= 3600;
+
+  let minuten = Math.floor(seconds / 60);
+  seconds = Math.round(seconds % 60);
  
-  if (sekunden === 60) 
+  if (seconds === 60) 
   {
-    sekunden = 0;
+    seconds = 0;
     minuten += 1;
   }
  
@@ -25,7 +25,7 @@ export function formatDuration(sekunden: number): string {
   if (minuten > 0 || stunden > 0) {
     result += `${minuten}m`;
   }
-  result += `${sekunden}s`;
+  result += `${seconds}s`;
  
   return result;
 }
